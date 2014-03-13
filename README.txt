@@ -33,6 +33,7 @@ The PressBooks github repository is updated frequently. [Stay up to date](https:
 = Using Git =
 
 cd /pressbooks/wp-content/plugins
+
 git clone https://github.com/BCcampus/pressbooks-textbook.git 
 
 = OR, go to the WordPress Dashboard =
