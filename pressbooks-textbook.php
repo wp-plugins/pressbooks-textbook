@@ -11,7 +11,7 @@
  * @wordpress-plugin
  * Plugin Name:       PressBooks Textbook
  * Description:       A plugin that extends PressBooks for textbook authoring
- * Version:           1.0.3
+ * Version:           1.0.4
  * Author:            Brad Payne
  * Author URI:        http://bradpayne.ca		
  * Text Domain:       pressbooks-textbook
@@ -38,7 +38,7 @@ class Textbook {
 	 * @since 1.0.0
 	 * @var string
 	 */
-	const VERSION = '1.0.3';
+	const VERSION = '1.0.4';
 
 	/**
 	 * Unique identifier for plugin.
@@ -163,21 +163,21 @@ class Textbook {
 			
 			// get user options
 			$user_options = $this->getUserOptions();
-			
-			foreach ( $pbt_plugin as $key => $val ) {
-				
-				$name = strstr( $key, '/', true );
-				$pbt_option = "pbt_" . $name . "_active";
 
-				// either it doesn't exist, or the client doesn't want it
-				if ( array_key_exists( $pbt_option, $user_options ) ) {
-					// check the value
-					if ( false == $user_options[$pbt_option] ) {
-						unset( $pbt_plugin[$key] );
+				foreach ( $pbt_plugin as $key => $val ) {
+
+					$name = strstr( $key, '/', true );
+					$pbt_option = "pbt_" . $name . "_active";
+
+					// either it doesn't exist, or the client doesn't want it
+					if ( array_key_exists( $pbt_option, $user_options ) ) {
+						// check the value
+						if ( false == $user_options[$pbt_option] ) {
+							unset( $pbt_plugin[$key] );
+						}
 					}
 				}
 			}
-		}
 
 		return $pbt_plugin;
 	}
@@ -189,11 +189,15 @@ class Textbook {
 	 * @return array
 	 */
 	private function getUserOptions() {
+		$result = array();
+		
 		( array ) $other = get_option( 'pbt_other_settings' );
 		( array ) $reuse = get_option( 'pbt_reuse_settings' );
 		( array ) $redistribute = get_option( 'pbt_redistribute_settings' );
 
-		return array_merge( $other, $reuse, $redistribute );
+		$result = @array_merge( $other, $reuse, $redistribute );
+		
+		return $result;
 	}
 
 	/**
