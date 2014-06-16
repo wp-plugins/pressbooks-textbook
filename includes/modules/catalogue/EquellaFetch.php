@@ -22,7 +22,6 @@ class EquellaFetch {
 	private $whereClause = '';
 	private $url = '';
 	private $justTheResultsMaam = array();
-	private $filter;
 	private $availableResults = 0;
 	private $searchTerm = '';
 	private $keywordFlag = false;
@@ -38,11 +37,27 @@ class EquellaFetch {
 	 * 
 	 */
 	public function __construct() {
-
 		$this->searchBySubject( $this->searchTerm );
+	}
+	
+	public function getUuid() {
+		return $this->uuid;
+	}
 
-		// Instantiate filter object  
-		$this->filter = new Filter( $this->keywordFlag, $this->byContributorFlag, $this->justTheResultsMaam, $this->whereClause, $this->uuid );
+	public function getKeywordFlag() {
+		return $this->keywordFlag;
+	}
+
+	public function getContributorFlag() {
+		return $this->byContributorFlag;
+	}
+
+	public function getResults() {
+		return $this->justTheResultsMaam;
+	}
+
+	public function getWhereClause() {
+		return $this->whereClause;
 	}
 
 	/**
@@ -188,30 +203,6 @@ class EquellaFetch {
 
 		$this->availableResults = $result['available'];
 		$this->justTheResultsMaam = $result['results'];
-	}
-
-	/**
-	 * Need to deliver the results in html
-	 *
-	 * @param int $startHere - the first record to start from (not zero based)
-	 * @param string $url - optinal, only required for generating short URL script
-	 * @return String - an HTML blob of the results 
-	 */
-	public function displayContent( $startHere, $url = '', $detail = false ) {
-		$limit = 0;
-		$html = '';
-
-		//if it's not already an integer, make it one.
-		$startHere = intval( $startHere );
-
-		if ( is_int( $startHere ) ) {
-			//display all the results starting at the first one (from a search form)
-			$html .= $this->filter->displayBySubject( 0, 0 );
-
-			return $html;
-		} else {
-			return false;
-		}
 	}
 
 	/**

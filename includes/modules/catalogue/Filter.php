@@ -35,23 +35,23 @@ class Filter {
 	 * @param string $subject either a keyword, subject or contributor details
 	 * @param string $uuid 
 	 */
-	public function __construct( $keywordFlag, $contributorFlag, $anyArray = array(), $subject = '', $uuid = '' ) {
-		/* check to be sure that we can get results from an equella array */
-		$this->resultsData = $anyArray;
+	public function __construct( EquellaFetch $response ) {
+		/* get results from an equella array */
+		$this->resultsData = $response->getResults();
 		$this->size = count( $this->resultsData );
-		$this->uuid = $uuid;
+		$this->uuid = $response->getUuid();
 
-		if ( $keywordFlag == true ) {
+		if ( $response->getKeywordFlag() == true ) {
 			$this->keyword = $subject;
 		}
-		if ( $contributorFlag == true ) {
+		if ( $response->getContributorFlag() == true ) {
 			$this->contributor = $subject;
 		}
-		if ( $contributorFlag == false && $keywordFlag == false ) {
-			$this->subject = $subject;
+		elseif ( $response->getContributorFlag() == false && $response->getKeywordFlag() == false ) {
+			$this->subject = $response->getWhereClause();
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param type $number
