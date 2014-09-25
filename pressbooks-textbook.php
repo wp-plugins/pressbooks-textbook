@@ -11,7 +11,7 @@
  * @wordpress-plugin
  * Plugin Name:       PressBooks Textbook
  * Description:       A plugin that extends PressBooks for textbook authoring
- * Version:           1.1.6
+ * Version:           1.1.7
  * Author:            Brad Payne
  * Author URI:        http://bradpayne.ca		
  * Text Domain:       pressbooks-textbook
@@ -38,7 +38,7 @@ class Textbook {
 	 * @since 1.0.0
 	 * @var string
 	 */
-	const VERSION = '1.1.6';
+	const VERSION = '1.1.7';
 
 	/**
 	 * Unique identifier for plugin.
@@ -87,7 +87,7 @@ class Textbook {
 		// include other functions
 		require( PBT_PLUGIN_DIR . 'includes/pbt-utility.php' );
 		require( PBT_PLUGIN_DIR . 'includes/pbt-rewrite.php' );
-		
+
 		wp_cache_add_global_groups( array( 'pbt' ) );
 	}
 
@@ -325,13 +325,13 @@ class Textbook {
 			return $themes;
 		}
 	}
-
+	
 }
 
 // Prohibit installation if PB is not installed
 if ( get_site_option( 'pressbooks-activated' ) ) {
 	if ( is_admin() ) {
-		require (dirname( __FILE__ ) . '/admin/class-pb-textbook-admin.php');
+		require (dirname( __FILE__ ) . '/admin/class-pbt-textbook-admin.php');
 		$pbt = new Admin\TextbookAdmin;
 	} else {
 		$pbt = \PBT\Textbook::get_instance();
