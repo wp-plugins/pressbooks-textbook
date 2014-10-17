@@ -135,6 +135,7 @@ p.bl_indent {
 	padding-top: 5px;	
 }
 #title-page .author,
+#title-page .contributing-authors,
 #title-page .publisher,
 #title-page .publisher-city {
 	font-family: "Times New Roman", Times, Georgia, serif;
@@ -145,6 +146,13 @@ p.bl_indent {
 	font-weight: normal;
 	margin-top: 2em;
 }
+
+#title-page .contributing-authors {
+	font-size: .875em;
+	font-weight: normal;
+	margin-top: 1em;
+}
+
 #title-page .publisher {
 	float: bottom;
 	font-size: .875em;

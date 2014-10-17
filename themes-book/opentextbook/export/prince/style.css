@@ -504,6 +504,7 @@ body > h1.title:first-of-type {
 #title-page > .subtitle,
 #title-page > div.logo,
 #title-page > .author,
+#title-page > .contributing-authors,
 #title-page > .publisher,
 #title-page > .publisher-city {
 	bookmark-level: none;
@@ -524,6 +525,7 @@ body > h1.title:first-of-type {
 	padding-top: 5px;	
 }
 #title-page > .author,
+#title-page > .contributing-authors,
 #title-page > .publisher,
 #title-page > .publisher-city {
 	font-family: "Crimson","Times New Roman", serif;
@@ -533,6 +535,12 @@ body > h1.title:first-of-type {
 	font-size: 12pt;
 	font-weight: normal;
 	margin-top: 3cm;
+}
+
+#title-page > .contributing-authors{
+	font-size: 12pt;
+	font-weight: normal;
+	margin-top: 1cm;
 }
 
 #title-page > .publisher {

@@ -4,7 +4,7 @@ Donation link: https://github.com/BCcampus/pressbooks-textbook/wiki/Contribution
 Tags: pressbooks, textbook
 Requires at least: 3.8.3
 Tested up to: 4.0
-Stable tag: 1.1.7
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,11 +19,13 @@ PressBooks Textbook adds functionality to the PressBooks plugin to make it easie
 * TinyMCE spell check
 * TinyMCE anchor button
 * Search functionality
-* Creative Commons attribution
+* Creative Commons license attribution
 * Prominent admin buttons (Import, Plugin)
 * Annotation functionality
-* Redistribution capabilities for free, digital versions of your book.
+* Optionally redistributing free, digital versions of your book.
 * Download links to openly licensed textbooks, ready to remix.
+* A remix 'eco-system' — Search and Import chapters from the same instance of PressBooks
+* Disable/enable comments
 
 Textbooks have functional and styling considerations above and beyond regular books. Open textbooks are those that are licensed with a [creative commons license](http://creativecommons.org).
 This plugin was built primarily to support the creation, remixing and distribution of open textbooks for the [open textbook project in BC](http://open.bccampus.ca/about-2/).
@@ -61,6 +63,24 @@ theme, then activate at the book level. You'll have access to those features and
 3. Activate the `Open Textbooks` theme at the network level
 4. Activate the `Open Textbooks` theme at the book level.
 
+== FAQ ==
+
+= What is an Open Textbook? =
+
+Open Textbooks are open educational resources (OER); they are instructional resources created and shared in ways so that more people have access to them. 
+That’s a different model than traditionally-copyrighted materials. 
+OER are defined as “teaching, learning, and research resources that reside in the public domain or have been released under an intellectual property license that permits their free use and re-purposing by others” (Hewlett Foundation).
+
+= How do you make a Textbook 'Open'? = 
+
+When creating Open Textbooks and other OERs, we feel it is best to adhere to the five Rs of open education as defined by David Wiley, which are:
+
+1. Retain – i.e. no digital rights management restrictions (DRM), the content is yours to keep, whether you’re the author, instructor or student.
+2. Reuse – you are free to use materials in a wide variety of ways without expressly asking permission of the copyright holder.
+3. Revise – as an educator, you can adapt, adjust, or modify the content to suit specific purposes and make the materials more relevant to your students. This means making it available in a number of different formats and including source files, where possible.
+4. Remix – you or your students can pull together a number of different resources to create something new.
+5. Redistribute – you are free to share with others, so they can reuse, remix, improve upon, correct, review or otherwise enjoy your work.
+
 == Screenshots == 
 
 1. Modified home page 
@@ -72,6 +92,13 @@ theme, then activate at the book level. You'll have access to those features and
 == Changelog ==
 
 See: https://github.com/BCcampus/pressbooks-textbook/commits/master for more detail
+
+= 1.2.0 (2014/10/15) =
+* adds ability to enable/disable comments
+* modifies term 'chapter' to 'page'
+* adds contributing authors to the homepage
+* moves location of the plugin settings
+* moves location of textbook downloads, for greater access
 
 = 1.1.7 (2014/09/22) =
 * adds the ability to search and import chapters from within your own instance of PB
