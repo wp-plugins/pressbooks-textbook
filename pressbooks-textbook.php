@@ -11,7 +11,7 @@
  * @wordpress-plugin
  * Plugin Name:       PressBooks Textbook
  * Description:       A plugin that extends PressBooks for textbook authoring
- * Version:           1.2.2
+ * Version:           1.2.3
  * Author:            Brad Payne
  * Author URI:        http://bradpayne.ca		
  * Text Domain:       pressbooks-textbook
@@ -38,7 +38,7 @@ class Textbook {
 	 * @since 1.0.0
 	 * @var string
 	 */
-	const VERSION = '1.2.2';
+	const VERSION = '1.2.3';
 
 	/**
 	 * Unique identifier for plugin.
@@ -348,13 +348,16 @@ class Textbook {
 		$epub_compress_images = array(
 		    'ebook_compress_images' => 1
 		);
-
+		
 		// set the default theme to opentextbooks
 		switch_theme( 'opentextbook' );
 		
 		// safety
 		check_theme_switched();
-			
+				
+		// send validation logs
+		update_option( 'pressbooks_email_validation_logs', 1 );
+		
 		// set display copyright information to on
 		update_option( 'pressbooks_theme_options_global', $display_copyright );
 
