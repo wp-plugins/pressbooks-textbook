@@ -67,6 +67,10 @@ ol.alphalist li::before{
 .pullleft{
 	margin-right: 4%;
 }
+
+small{
+	font-size:80%
+}
 /****************************************
 	Cover page
 *****************************************/
@@ -190,6 +194,14 @@ p.cc-block{
 /*******************************
 	Textbook specific styles 
 ********************************/
+
+#content table {
+	border-spacing: 0;
+}
+
+#content table tr td, #content table tr th{
+	border: 1px solid #e7e7e7;
+}
 
 .bcc-box{
 	/*	width: 100%;*/
