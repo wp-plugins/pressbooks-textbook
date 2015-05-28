@@ -2,9 +2,9 @@
 Contributors: bdolor
 Donation link: https://github.com/BCcampus/pressbooks-textbook/wiki/Contribution-guidelines
 Tags: pressbooks, textbook
-Requires at least: 3.8.3
-Tested up to: 4.0
-Stable tag: 1.2.0
+Requires at least: 4.1.4
+Tested up to: 4.2.2
+Stable tag: 1.2.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,7 +24,7 @@ PressBooks Textbook adds functionality to the PressBooks plugin to make it easie
 * Annotation functionality
 * Optionally redistributing free, digital versions of your book.
 * Download links to openly licensed textbooks, ready to remix.
-* A remix 'eco-system' — Search and Import chapters from the same instance of PressBooks
+* A remix 'eco-system' — Search and Import chapters from both local and remote instances of PressBooks
 * Disable/enable comments
 
 Textbooks have functional and styling considerations above and beyond regular books. Open textbooks are those that are licensed with a [creative commons license](http://creativecommons.org).
@@ -92,6 +92,43 @@ When creating Open Textbooks and other OERs, we feel it is best to adhere to the
 == Changelog ==
 
 See: https://github.com/BCcampus/pressbooks-textbook/commits/master for more detail
+
+= 1.2.8 (2015/05/28) =
+* bug fix
+
+= 1.2.7 (2015/05/26) =
+* add search and import feature for remote instances of PB
+
+= 1.2.6 (2015/04/21) =
+* patch potential xss attack vector
+* adding accessibility button to theme
+* update pdf export to work with new luther parent theme
+* remove automatic theme switch on book creation due to inconsistent behaviour
+* fix php notice messages in search and import
+* fix syntax error in search and import
+
+= 1.2.5 (2015/03/11) = 
+* add table cell border to web and print
+* fix default theme on new book creation
+* add part title to web view
+* fix latest exports returning empty on book titles with periods
+* stability/logic improvements
+
+= 1.2.3 (2015/01/12) =
+* updating ccc documentation
+* adding sub/sup buttons to tinymce
+* css styles to support Jack! 
+* add optional (piwik/google) analytics event tracking code
+* improvements to textbook download page
+
+= 1.2.2 (2014/10/30) =
+* hotfix for inconsistent behaviour on default activation of theme
+
+= 1.2.1 (2014/10/29) = 
+* changes placement of export files on homepage
+* fix for license picker in textbook downloads
+* fix for running header in pdf output (thanks Jack!)
+* adding default book options on new book creation
 
 = 1.2.0 (2014/10/15) =
 * adds ability to enable/disable comments

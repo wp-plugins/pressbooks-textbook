@@ -202,7 +202,9 @@ class Disable_Comments {
 	function filter_query() {
 		if ( is_comment_feed() ) {
 			if ( isset( $_GET['feed'] ) ) {
-				wp_redirect( remove_query_arg( 'feed' ), 301 );
+				// remove possible XSS
+				$url = esc_url_raw( remove_query_arg( 'feed', 301 ) );
+				wp_redirect( $url );
 				exit;
 			}
 
@@ -268,7 +270,9 @@ class Disable_Comments {
 	 */
 	private function settings_page_url() {
 		$base = admin_url( 'options-general.php' );
-		return add_query_arg( 'page', 'disable_comments_settings', $base );
+		// Prevent XSS 
+		$url = esc_url( add_query_arg( 'page', 'disable_comments_settings', $base ) );
+		return $url;
 	}
 
 	/**
@@ -492,7 +496,7 @@ class Disable_Comments {
 	 * Added for integration with PressBooks Textbook plugin
 	 */
 	private function pbtModifyDisableComments() {
-		$post_types = array( 'chapter', 'front-matter', 'back-matter' );
+		$post_types = array( 'chapter', 'front-matter', 'back-matter', 'attachment' );
 
 		// if it looks like the first run, we set up a default 
 		// to disable comments on PB custom post types
