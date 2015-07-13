@@ -11,7 +11,7 @@
  * @wordpress-plugin
  * Plugin Name:       PressBooks Textbook
  * Description:       A plugin that extends PressBooks for textbook authoring
- * Version:           1.2.0
+ * Version:           1.2.11
  * Author:            Brad Payne
  * Author URI:        http://bradpayne.ca		
  * Text Domain:       pressbooks-textbook
@@ -38,7 +38,7 @@ class Textbook {
 	 * @since 1.0.0
 	 * @var string
 	 */
-	const VERSION = '1.2.0';
+	const VERSION = '1.2.11';
 
 	/**
 	 * Unique identifier for plugin.
@@ -69,7 +69,10 @@ class Textbook {
 
 		if ( ! defined( 'PBT_PLUGIN_URL' ) )
 				define( 'PBT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-
+		
+		if ( ! defined( 'PB_PLUGIN_DIR' ) )	
+				define ( 'PB_PLUGIN_DIR', WP_PLUGIN_DIR . '/pressbooks/' ); // Must have trailing slash!
+		
 		// Load translations
 		add_action( 'init', array( $this, 'loadPluginTextDomain' ) );
 
@@ -79,10 +82,11 @@ class Textbook {
 
 		// Hook in our pieces
 		add_action( 'plugins_loaded', array( &$this, 'includes' ) );
-		add_action( 'init', array( &$this, 'registerScriptsAndStyles' ) );
+		add_action( 'init', array( &$this, 'pbtInit' ) );
 		add_action( 'template_redirect', '\PBT\Rewrite\do_open', 0 );
-		add_action( 'wp_enqueue_style', array( &$this, 'enqueueChildThemes' ) );
+		add_action( 'wp_enqueue_scripts', array( &$this, 'enqueueChildThemes' ) );
 		add_filter( 'allowed_themes', array( &$this, 'filterChildThemes' ), 11 );
+		add_action( 'pressbooks_new_blog', array( $this, 'newBook' ) );
 
 		// include other functions
 		require( PBT_PLUGIN_DIR . 'includes/pbt-utility.php' );
@@ -143,7 +147,13 @@ class Textbook {
 	private function filterPlugins( $pbt_plugin ) {
 		$already_active = get_option('active_plugins');
 		$network_already_active = get_site_option('active_sitewide_plugins');
-
+		
+		if ( defined( 'PB_PLUGIN_VERSION' ) ) {
+			if ( version_compare( PB_PLUGIN_VERSION, '2.5.1' ) >= 0 ) {
+				unset( $pbt_plugin['mce-table-buttons/mce_table_buttons.php'] );
+			}
+		}
+		
 		// activate only if one of our themes is being used
 		if ( false == self::isTextbookTheme() ) {
 			unset( $pbt_plugin['mce-textbook-buttons/mce-textbook-buttons.php'] );
@@ -226,12 +236,9 @@ class Textbook {
 	 * 
 	 * @since 1.0.1
 	 */
-	function registerScriptsAndStyles() {
-		// Register styles
+	function pbtInit() {
+		// Register theme directory
 		register_theme_directory( PBT_PLUGIN_DIR . 'themes-book' );
-		wp_register_style( 'pbt-import-button', PBT_PLUGIN_URL . 'admin/assets/css/menu.css', '', self::VERSION );
-		wp_register_style( 'pbt-open-textbooks', PBT_PLUGIN_URL . 'themes-book/opentextbook/style.css', array( 'pressbooks' ), self::VERSION, 'screen' );
-
 		// Add a rewrite rule for the keyword "open"
 		add_rewrite_endpoint( 'open', EP_ROOT );
 		// Flush, if we haven't already 
@@ -296,7 +303,9 @@ class Textbook {
 	 * @since 1.0.0
 	 */
 	function enqueueChildThemes() {
-		wp_enqueue_style( 'pbt-open-textbooks' );
+		wp_register_style( 'open-textbook', PBT_PLUGIN_URL . 'themes-book/opentextbook/style.css', array( 'pressbooks' ), self::VERSION, 'screen' );
+		wp_enqueue_style( 'pressbooks-book' );
+		wp_enqueue_style( 'open-textbook' );
 	}
 
 	/**
@@ -324,6 +333,55 @@ class Textbook {
 		} else {
 			return $themes;
 		}
+	}
+	
+	/**
+	 * This function is added to the PB hook 'pressbooks_new_blog' to add some time
+	 * saving customizations
+	 * 
+	 * @since 1.2.1
+	 * @see pressbooks/includes/class-pb-activation.php
+	 * 
+	 */
+	function newBook() {
+
+		$display_copyright = array(
+		    'copyright_license' => 1,
+		);
+
+		$pdf_options = array(
+		    'pdf_page_size' => 3,
+		    'pdf_blankpages' => 2,
+		);
+
+		$epub_compress_images = array(
+		    'ebook_compress_images' => 1
+		);
+		
+//		// set the default theme to opentextbooks
+//		switch_theme( 'opentextbook' );
+//		check_theme_switched();
+//		
+//		// safety
+//		if ( ( get_option( 'template' ) != 'pressbooks-book' ) || ( get_option( 'stylesheet' ) != 'opentextbook' ) ) {
+//			update_option( 'template', 'pressbooks-book' );
+//			update_option( 'stylesheet', 'opentextbook' );
+//		};
+
+		// send validation logs
+		update_option( 'pressbooks_email_validation_logs', 1 );
+		
+		// set display copyright information to on
+		update_option( 'pressbooks_theme_options_global', $display_copyright );
+
+		// choose 'US Letter size' for PDF exports
+		update_option( 'pressbooks_theme_options_pdf', $pdf_options );
+
+		// EPUB export - reduce image size and quality 
+		update_option( 'pressbooks_theme_options_ebook', $epub_compress_images );
+		
+		// modify the book description
+		update_option( 'blogdescription', __( 'Open Textbook', $this->plugin_slug ) );
 	}
 	
 }
