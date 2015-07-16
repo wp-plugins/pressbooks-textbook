@@ -31,7 +31,7 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
 	font-size: 1.3em;
 }
-h1, h2 {
+h1, h2, h3 {
 	text-align: left;
 }
 h2 {
@@ -67,17 +67,47 @@ ol.alphalist li::before{
 .pullleft{
 	margin-right: 4%;
 }
+
+small{
+	font-size:80%
+}
+
+/** tight and loose tracking **/
+.tight {
+	letter-spacing: -0.25px;
+	word-spacing: -0.075em;
+}
+
+.very-tight {
+	letter-spacing: -0.5px;
+	word-spacing: -0.09em;
+}
+
+.loose{
+	letter-spacing: 0.25px;
+	word-spacing: 0.075em;
+}
+
+.very-loose {
+	letter-spacing: 0.5px;
+	word-spacing: 0.09em;
+}
+
 /****************************************
 	Cover page
 *****************************************/
 .alt-formats{
-	float: left;
-	max-width: 340px;
-	width: 35%;
+	float: right;
+	max-width: 350px;
+	width: 36.5%;
+	margin-top: 20px;
+	text-align: center;
 }
 
-.alt-formats h4{
-	border-bottom-color: #FFFFFF;
+.book-info-container .alt-formats h4{
+	text-align: center;
+	color: #1f1f1d;
+	border-bottom-color: #000000;
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
 	padding-bottom: 10px;
@@ -187,6 +217,15 @@ p.cc-block{
 	Textbook specific styles 
 ********************************/
 
+#content table {
+	border-spacing: 0;
+	display: table;
+}
+
+#content table tr td, #content table tr th{
+	border: 1px solid #e7e7e7;
+}
+
 .bcc-box{
 	/*	width: 100%;*/
 	padding: 2% 3%;
@@ -252,11 +291,6 @@ span.small.epub3 {
 
 }
 
-span.small.hpub {
-	background: url(../../../pressbooks/assets/images/hpub-36.png) -0 0 no-repeat;
-
-}
-
 span.small.icml {
 	background: url(../../../pressbooks/assets/images/icml-36.png) -0 0 no-repeat;
 
@@ -267,7 +301,7 @@ span.small.mobi {
 
 }
 
-span.small.pdf {
+span.small.pdf, span.small.mpdf {
 	background: url(../../../pressbooks/assets/images/pdf-36.png) -0 0 no-repeat;
 
 }
@@ -287,6 +321,10 @@ span.small.xhtml {
 
 }
 
+/** support divs to export content for web-only vs not-web; pdf-only vs not-pdf **/
+.not-web, .pdf-only {
+	display: none;
+}
 /*************************
 	Media queries
 **************************/
