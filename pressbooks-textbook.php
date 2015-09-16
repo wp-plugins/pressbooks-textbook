@@ -1,17 +1,17 @@
 <?php
 
 /**
- * PressBooks Textbook
+ * Pressbooks Textbook
  *
- * @package   PressBooks_Textbook
+ * @package   Pressbooks_Textbook
  * @author    Brad Payne <brad@bradpayne.ca>
  * @license   GPL-2.0+
  * @copyright 2014 Brad Payne
  *
  * @wordpress-plugin
- * Plugin Name:       PressBooks Textbook
- * Description:       A plugin that extends PressBooks for textbook authoring
- * Version:           1.2.15
+ * Plugin Name:       Pressbooks Textbook
+ * Description:       A plugin that extends Pressbooks for textbook authoring
+ * Version:           1.2.16
  * Author:            Brad Payne
  * Author URI:        http://bradpayne.ca		
  * Text Domain:       pressbooks-textbook
@@ -38,7 +38,7 @@ class Textbook {
 	 * @since 1.0.0
 	 * @var string
 	 */
-	const VERSION = '1.2.15';
+	const VERSION = '1.2.16';
 
 	/**
 	 * Unique identifier for plugin.
@@ -159,6 +159,9 @@ class Textbook {
 			}
 			if ( version_compare( PB_PLUGIN_VERSION, '2.5.4' ) >= 0 ) {
 				unset( $pbt_plugin['disable-comments/disable-comments.php'] );	
+			}
+			if ( version_compare( PB_PLUGIN_VERSION, '2.7.2' ) >= 0 ) {
+				unset( $pbt_plugin['mce-anchor-button/mce-anchor-button.php'] );	
 			}
 		}
 		
