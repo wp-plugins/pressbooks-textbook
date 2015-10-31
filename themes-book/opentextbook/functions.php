@@ -10,6 +10,13 @@ function fitzgerald_enqueue_styles() {
 
 add_action( 'wp_print_styles', 'fitzgerald_enqueue_styles' );
 
+function pbt_enqueue_child_theme_styles() {
+    wp_enqueue_style( 'pressbooks-book' );
+    wp_enqueue_style( 'open-textbook' );
+}
+
+add_action( 'wp_enqueue_scripts', 'pbt_enqueue_child_theme_styles', 100 );
+
 /**
  * Returns an html blog of meta elements 
  * 
@@ -24,7 +31,7 @@ function pbt_get_seo_meta_elements() {
 	    'publisher' => 'pb_publisher'
 	);
 
-	$html = "<meta name='application-name' content='PressBooks'>\n";
+	$html = "<meta name='application-name' content='Pressbooks'>\n";
 	$metadata = \PressBooks\Book::getBookInformation();
 
 	// create meta elements
@@ -156,6 +163,10 @@ function pbt_terminology_modify_context( $translated, $original, $context, $doma
 	return $translated;
 }
 
-add_filter( 'gettext', 'pbt_terminology_modify', 11, 3 );
-add_filter( 'gettext_with_context', 'pbt_terminology_modify_context', 11, 4 );
+/**** Removing these filters Jume 2015 to remain consistent with the PB documentation *****/
+//add_filter( 'gettext', 'pbt_terminology_modify', 11, 3 );
+//add_filter( 'gettext_with_context', 'pbt_terminology_modify_context', 11, 4 );
 
+// removes incorrect notice on epub/pdf export that the book was created on pressbooks.com
+$GLOBALS['PB_SECRET_SAUCE']['TURN_OFF_FREEBIE_NOTICES_EPUB'] = 'not_created_on_pb_com';
+$GLOBALS['PB_SECRET_SAUCE']['TURN_OFF_FREEBIE_NOTICES_PDF'] = 'not_created_on_pb_com';

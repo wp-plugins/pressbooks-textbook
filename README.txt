@@ -1,17 +1,17 @@
-=== PressBooks Textbook ===
+=== Pressbooks Textbook ===
 Contributors: bdolor
 Donation link: https://github.com/BCcampus/pressbooks-textbook/wiki/Contribution-guidelines
 Tags: pressbooks, textbook
-Requires at least: 3.8.3
-Tested up to: 4.0
-Stable tag: 1.2.0
+Requires at least: 4.3.1
+Tested up to: 4.3.1
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-PressBooks Textbook adds functionality to the PressBooks plugin to make it easier to author textbooks.
+Pressbooks Textbook adds functionality to the Pressbooks plugin to make it easier to author textbooks.
 
 == Description ==
-**PressBooks Textbook** adds functionality to PressBooks to make it easier to author textbooks as well. The features it currently offers are: 
+**Pressbooks Textbook** adds functionality to Pressbooks to make it easier to author textbooks as well. The features it currently offers are: 
 
 * Textbook Theme
 * TinyMCE table buttons
@@ -24,7 +24,7 @@ PressBooks Textbook adds functionality to the PressBooks plugin to make it easie
 * Annotation functionality
 * Optionally redistributing free, digital versions of your book.
 * Download links to openly licensed textbooks, ready to remix.
-* A remix 'eco-system' — Search and Import chapters from the same instance of PressBooks
+* A remix 'eco-system' — Search and Import chapters from both local and remote instances of Pressbooks
 * Disable/enable comments
 
 Textbooks have functional and styling considerations above and beyond regular books. Open textbooks are those that are licensed with a [creative commons license](http://creativecommons.org).
@@ -34,8 +34,8 @@ This plugin was built primarily to support the creation, remixing and distributi
 
 IMPORTANT! 
 
-You must first install [PressBooks](https://github.com/pressbooks/pressbooks). This plugin won't work without it.
-The PressBooks github repository is updated frequently. [Stay up to date](https://github.com/pressbooks/pressbooks/tree/master).
+You must first install [Pressbooks](https://github.com/pressbooks/pressbooks). This plugin won't work without it.
+The Pressbooks github repository is updated frequently. [Stay up to date](https://github.com/pressbooks/pressbooks/tree/master).
 
 Most of the functionality of this plugin, like search, textbook buttons and annotation are tied directly to the `Open Textbooks` theme. Network Activate the `Open Textbooks` 
 theme, then activate at the book level. You'll have access to those features and more. 
@@ -51,7 +51,7 @@ theme, then activate at the book level. You'll have access to those features and
 = OR, go to the WordPress Dashboard =
 
 1. Navigate to the Network Admin -> Plugins
-2. Search for 'PressBooks Textbook'
+2. Search for 'Pressbooks Textbook'
 3. Click 'Network Activate'
 4. Activate the `Open Textbooks` theme at the network level
 5. Activate the `Open Textbooks` theme at the book level.
@@ -92,6 +92,76 @@ When creating Open Textbooks and other OERs, we feel it is best to adhere to the
 == Changelog ==
 
 See: https://github.com/BCcampus/pressbooks-textbook/commits/master for more detail
+
+= 2.0 (2015/10/29) =
+* major upgrade to coincide with PB 3.0 release
+* updated namespaces 
+
+= 1.2.16 (2015/09/16) =
+* minimum req WP version bump
+* remove font awesome dependency (tks @greatislander)
+* migrate MCE Anchor button to PB (tks @greatislander)
+
+= 1.2.15 (2015/08/25) =
+* minimum req WP version bump
+* fix for periods in titles truncating export filenames
+
+= 1.2.14 (2015/08/10) =
+* minor tweaks
+* migrating more functionality to PB
+
+= 1.2.13 (2015/07/16) =
+* migrating some functionality to PB
+
+= 1.2.11/12 (2015/07/13) =
+* fix for download link to mPDF on homepage
+
+= 1.2.10 (2015/07/09) =
+* styling change for tables in admin interface
+* migration of table functionality to PB
+
+= 1.2.9 (2015/06/22) =
+* add style for tight/loose tracking 
+* left align h3 tags
+* support for disabling social media buttons
+* bug fix for search and import
+
+= 1.2.8 (2015/05/28) =
+* bug fix
+
+= 1.2.7 (2015/05/26) =
+* add search and import feature for remote instances of PB
+
+= 1.2.6 (2015/04/21) =
+* patch potential xss attack vector
+* adding accessibility button to theme
+* update pdf export to work with new luther parent theme
+* remove automatic theme switch on book creation due to inconsistent behaviour
+* fix php notice messages in search and import
+* fix syntax error in search and import
+
+= 1.2.5 (2015/03/11) = 
+* add table cell border to web and print
+* fix default theme on new book creation
+* add part title to web view
+* fix latest exports returning empty on book titles with periods
+* stability/logic improvements
+
+= 1.2.3 (2015/01/12) =
+* updating ccc documentation
+* adding sub/sup buttons to tinymce
+* css styles to support Jack! 
+* add optional (piwik/google) analytics event tracking code
+* improvements to textbook download page
+
+= 1.2.2 (2014/10/30) =
+* hotfix for inconsistent behaviour on default activation of theme
+
+= 1.2.1 (2014/10/29) = 
+* changes placement of export files on homepage
+* fix for license picker in textbook downloads
+* fix for running header in pdf output (thanks Jack!)
+* adding default book options on new book creation
 
 = 1.2.0 (2014/10/15) =
 * adds ability to enable/disable comments

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Options/Settings for PressBooks Textbook plugin
+ * Options/Settings for Pressbooks Textbook plugin
  * 
- * @package PressBooks_Textbook
+ * @package Pressbooks_Textbook
  * @author Brad Payne <brad@bradpayne.ca>
  * @license   GPL-2.0+
  * 
@@ -39,7 +39,7 @@ function latest_files_public_callback( $args ) {
 	$html = '<input type="radio" id="files-public" name="pbt_redistribute_settings[latest_files_public]" value="1"' . checked( 1, $options['latest_files_public'], false ) . '/> ';
 	$html .= '<label for="files-public"> ' . __( 'Yes. I would like the latest export files to be available on the homepage for free, to everyone.', 'pressbooks-textbook' ) . '</label><br />';
 	$html .= '<input type="radio" id="files-admin" name="pbt_redistribute_settings[latest_files_public]" value="0" ' . checked( 0, $options['latest_files_public'], false ) . '/> ';
-	$html .= '<label for="files-admin"> ' . __( 'No. I would like the latest export files to only be available to administrators. (PressBooks default)', 'pressbooks-textbook' ) . '</label>';
+	$html .= '<label for="files-admin"> ' . __( 'No. I would like the latest export files to only be available to administrators. (Pressbooks default)', 'pressbooks-textbook' ) . '</label>';
 	echo $html;
 }
 
@@ -126,7 +126,7 @@ function pbt_reuse_section_callback() {
 		<li>XML - as part of post_metadata</li>"
 	. "</ul></li>"
 	. "<li>The license information is searchable; it contains machine readable metadata.</li>"
-	. "<li>The module is made specifically for PressBooks!</li>"
+	. "<li>The module is made specifically for Pressbooks!</li>"
 	. "<li>You can specify page license (if it is different than your book license). A page license can override the book license, in a similar fashion to a page author overriding the book author.</li>"
 	. "<li>It uses the <a target='_blank' href='https://api.creativecommons.org/docs/readme_15.html'>webservice API</a> that Creative Commons supplies.</li>"
 	. "<li>It comes with some language capabilities (depending on what Language you've defined in 'Book Info' and what the API supports.</li>"
@@ -178,4 +178,99 @@ function reuse_absint_sanitize( $input ) {
 	}
 
 	return $options;
+}
+
+/**
+ * 
+ */
+function remix_section_callback(){
+	echo "<p>If you know of another Pressbooks instance, and you know they also have Creative Commons licensed materials, here is where you add their domain."
+	. " Having a list of domains will enable <a href='admin.php?page=api_search_import'>searching and importing</a> against their collection, the same way that you can search and import against your own collection.</p>";
+	
+} 
+
+/**
+ * 
+ */
+function api_endpoint_public_callback() {
+	$options = get_option( 'pbt_remix_settings' );
+	
+	// add default if not set
+	if ( ! isset( $options['pbt_api_endpoints'] ) ) {
+		$options['pbt_api_endpoints'][0] = network_home_url();
+	}
+
+	$html = '';
+
+	foreach ( $options['pbt_api_endpoints'] as $key => $endpoint ) {
+		if ( 0 === $key ) {
+			$html .= '<input id="' . $key . '" disabled="true" class="regular-text highlight" type="url" name="pbt_remix_settings[pbt_api_endpoints][' . $key . ']" value="' . $endpoint . '" />'
+				. '<input onclick="addRow(this.form);" type="button" value="Add URL" />';
+
+			// hidden value, because disabled inputs don't make it to $_POST
+			$html .= '<input type="hidden" name="pbt_remix_settings[pbt_api_endpoints][0]" value="' . network_home_url() . '"/>';
+		} else {
+			$html .= '<tr class="endpoints-' . $key . '">'
+				. '<th>' . $key . '</th>'
+				. '<td><input id="' . $key . '" class="regular-text highlight" type="url" name="pbt_remix_settings[pbt_api_endpoints][' . $key . ']" value="' . $endpoint . '" />'
+				. '<input type="button" value="Add URL" onclick="addRow();" /><input type="button" value="Remove URL" onclick="removeRow(' . $key . ');" /></td></tr>';
+		}
+	}
+
+	echo $html;
+}
+
+/**
+ * 
+ * @param type $input
+ * @return type
+ */
+function remix_url_sanitize( $input ) {
+	$protocols = array( 'http', 'https' );
+	$i = 0;
+	$valid = array();
+	$success_msg = 'Settings saved. <a href="admin.php?page=api_search_import">Ready to search and import?</a>';
+
+	// get rid of blank input, sanitize url
+	foreach ( $input['pbt_api_endpoints'] as $key => $url ) {
+		if ( empty( $url ) ) {
+			continue;
+		}
+		// sanitize, reset the key to maintain sequential numbering, to account for blank entries
+		$valid['pbt_api_endpoints'][$i] = trailingslashit(esc_url( $url, $protocols )) ;
+
+		// check if they are API enabled Pressbooks instances: 
+		$api_endpoint = $valid['pbt_api_endpoints'][$i] . 'api/v1/books/';
+
+		$check_response = wp_remote_head( $api_endpoint );
+		$code = wp_remote_retrieve_response_code($check_response);
+		
+		if ( $code > 400 ) {
+			$msg = $code . ' returned for ' . $api_endpoint . ' — the domain you tried to add did not return a response code we can not work with.';
+			add_settings_error(
+				'pbt_remix_settings', 
+				'settings_updated', 
+				$msg, 
+				'error'
+			);
+			// jankified, so discard
+			unset( $valid['pbt_api_endpoints'][$i] );
+		}
+		
+		$i ++;
+	}
+
+	// before returning, force this PB instance to be preserved
+	if ( network_home_url() != $valid['pbt_api_endpoints'][0] ){
+		$valid['pbt_api_endpoints'][0] = network_home_url();
+	}
+	
+	add_settings_error(
+		'pbt_remix_settings',
+		'settings_updated',
+		$success_msg,
+		'updated'
+		);
+	
+	return $valid;
 }

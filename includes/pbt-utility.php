@@ -2,7 +2,7 @@
 /**
  * Utility functions particular to PBT
  *
- * @package PressBooks_Textbook
+ * @package Pressbooks_Textbook
  * @author Brad Payne <brad@bradpayne.ca>
  * @license   GPL-2.0+
  * 
@@ -26,16 +26,21 @@ function latest_exports() {
 	    '.icml',
 	    '.html',
 	    '.xml',
-	    '._vanilla.xml'
+	    '._vanilla.xml',
+	    '._oss.pdf',
+	    '.odt',
 	);
 
-	$dir = \PressBooks\Export\Export::getExportFolder();
+	$dir = \PressBooks\Modules\Export\Export::getExportFolder();
 
 	$files = array();
 
 	// group by extension, sort by date newest first 
 	foreach ( \PressBooks\Utility\scandir_by_date( $dir ) as $file ) {
-		$ext = strstr( $file, '.' );
+		// only interested in the part of filename starting with the timestamp
+		preg_match( '/-\d{10,11}(.*)/', $file, $matches );
+		// grab the first captured parenthisized subpattern
+		$ext = $matches[1];
 		$files[$ext][] = $file;
 	}
 

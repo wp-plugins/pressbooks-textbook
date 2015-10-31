@@ -1,8 +1,8 @@
 <?php
 /**
- * This admin page allows editors ro access functionality that downloads textbooks. 
+ * This admin page allows editors access to functionality that downloads textbooks. 
  *
- * @package PressBooks_Textbook
+ * @package Pressbooks_Textbook
  * @author Brad Payne <brad@bradpayne.ca>
  * @license   GPL-2.0+
  * 
@@ -28,9 +28,14 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	if ( $textbooks ) {
 		echo $textbooks;
 	} else {
-		$equellaFetch = new \PBT\Catalogue\EquellaFetch();
-		$filter = new \PBT\Catalogue\Filter( $equellaFetch );
-		$textbooks = $filter->displayBySubject();
+		try {
+			$equellaFetch = new \PBT\Catalogue\EquellaFetch();
+			$filter = new \PBT\Catalogue\Filter( $equellaFetch );
+			$textbooks = $filter->displayBySubject();
+			
+		} catch ( Exception $exc ) {
+			echo $exc->getMessage();
+		}
 
 		wp_cache_set( 'open-textbooks', $textbooks, 'pbt', 10800 );
 

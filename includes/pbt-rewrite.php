@@ -3,7 +3,7 @@
 /**
  * Rewrite rules for file downloads.
  * *
- * @package PressBooks_Textbook
+ * @package Pressbooks_Textbook
  * @author Brad Payne <brad@bradpayne.ca>
  * @license   GPL-2.0+
  * 
@@ -56,6 +56,9 @@ function do_open() {
 				case 'vanillawxr':
 					$ext = '_vanilla.xml';
 					break;
+				case 'mpdf':
+					$ext = '_oss.pdf';
+					break;
 				default:
 					$ext = $_GET['type'];
 					break;
@@ -71,7 +74,7 @@ function do_open() {
 
 function download_open_export_file( $filename ) {
 
-	$filepath = \PressBooks\Export\Export::getExportFolder() . $filename;
+	$filepath = \PressBooks\Modules\Export\Export::getExportFolder() . $filename;
 	if ( ! is_readable( $filepath ) ) {
 		// Cannot read file
 		wp_die( __( 'File not found', 'pressbooks-textbook' ) . ": $filename", '', array( 'response' => 404 ) );
@@ -80,7 +83,7 @@ function download_open_export_file( $filename ) {
 	// Force download
 	set_time_limit( 0 );
 	header( 'Content-Description: File Transfer' );
-	header( 'Content-Type: ' . \Pressbooks\Export\Export::mimeType( $filepath ) );
+	header( 'Content-Type: ' . \PressBooks\Modules\Export\Export::mimeType( $filepath ) );
 	header( 'Content-Disposition: attachment; filename="' . $filename . '"' );
 	header( 'Content-Transfer-Encoding: binary' );
 	header( 'Expires: 0' );
